@@ -31,6 +31,7 @@ library.signal = loadstring(game:HttpGet("https://raw.githubusercontent.com/KaiR
 
 local local_player = game:GetService("Players").LocalPlayer
 local mouse = local_player:GetMouse()
+local mousePos = Vector2.new(0, 0)
 
 local http = game:GetService("HttpService")
 local rs = game:GetService("RunService")
@@ -153,7 +154,8 @@ function library.new(library_title, cfg_location)
     }, ScreenGui)
 
     rs.RenderStepped:Connect(function()
-        Cursor.Position = UDim2.new(0, mouse.X, 0, mouse.Y)
+        mousePos = uis:GetMouseLocation()
+        Cursor.Position = UDim2.new(0, mousePos.X, 0, mousePos.Y)
     end)
 
 	ScreenGui.Parent = game:GetService("CoreGui")
@@ -969,7 +971,7 @@ end
                                 extra_value.Transparency = 0
 
                                 function color.update_transp()
-                                    local x = math.clamp(mouse.X - TransparencyPicker.AbsolutePosition.X, 0, 180)
+                                    local x = math.clamp(mousePos.X - TransparencyPicker.AbsolutePosition.X, 0, 180)
                                     TransparencyPick.Position = UDim2.new(0, x, 0, 0)
                                     local transparency = x/180
                                     extra_value.Transparency = transparency
@@ -1002,8 +1004,8 @@ end
                             menu.values[tab.tab_num][section_name][sector_name][extra_flag] = extra_value
 
                             function color.update_color()
-                                local ColorX = (math.clamp(mouse.X - ColorPicker.AbsolutePosition.X, 0, ColorPicker.AbsoluteSize.X)/ColorPicker.AbsoluteSize.X)
-                                local ColorY = (math.clamp(mouse.Y - ColorPicker.AbsolutePosition.Y, 0, ColorPicker.AbsoluteSize.Y)/ColorPicker.AbsoluteSize.Y)
+                                local ColorX = (math.clamp(mousePos.X - ColorPicker.AbsolutePosition.X, 0, ColorPicker.AbsoluteSize.X)/ColorPicker.AbsoluteSize.X)
+                                local ColorY = (math.clamp(mousePos.Y - ColorPicker.AbsolutePosition.Y, 0, ColorPicker.AbsoluteSize.Y)/ColorPicker.AbsoluteSize.Y)
                                 ColorPick.Position = UDim2.new(ColorX, 0, ColorY, 0)
 
                                 color.s = 1 - ColorX
@@ -1029,7 +1031,7 @@ end
                             end)
 
                             function color.update_hue()
-                                local y = math.clamp(mouse.Y - HuePicker.AbsolutePosition.Y, 0, 148)
+                                local y = math.clamp(mousePos.Y - HuePicker.AbsolutePosition.Y, 0, 148)
                                 HuePick.Position = UDim2.new(0, 0, 0, y)
                                 local hue = y/148
                                 color.h = 1-hue
@@ -1975,7 +1977,7 @@ end
                             mouse_in = false
                         end)
                         SliderButton.MouseButton1Down:Connect(function()
-                            SliderFrame.Size = UDim2.new(0, math.clamp(mouse.X - SliderFrame.AbsolutePosition.X, 0, 260), 1, 0)
+                            SliderFrame.Size = UDim2.new(0, math.clamp(mousePos.X - SliderFrame.AbsolutePosition.X, 0, 260), 1, 0)
                         
                             local val = math.floor((((max - min) / 260) * SliderFrame.AbsoluteSize.X) + min)
                             if val ~= value.Slider then
@@ -1987,7 +1989,7 @@ end
                             is_sliding = true
 
                             move_connection = mouse.Move:Connect(function()
-                                SliderFrame.Size = UDim2.new(0, math.clamp(mouse.X - SliderFrame.AbsolutePosition.X, 0, 260), 1, 0)
+                                SliderFrame.Size = UDim2.new(0, math.clamp(mousePos.X - SliderFrame.AbsolutePosition.X, 0, 260), 1, 0)
                         
                                 local val = math.floor((((max - min) / 260) * SliderFrame.AbsoluteSize.X) + min)
                                 if val ~= value.Slider then
@@ -1998,7 +2000,7 @@ end
                             end)
                             release_connection = uis.InputEnded:Connect(function(Mouse)
                                 if Mouse.UserInputType == Enum.UserInputType.MouseButton1 then
-                                    SliderFrame.Size = UDim2.new(0, math.clamp(mouse.X - SliderFrame.AbsolutePosition.X, 0, 260), 1, 0)
+                                    SliderFrame.Size = UDim2.new(0, math.clamp(mousePos.X - SliderFrame.AbsolutePosition.X, 0, 260), 1, 0)
                         
                                     local val = math.floor((((max - min) / 260) * SliderFrame.AbsoluteSize.X) + min)
                                     if val ~= value.Slider then
