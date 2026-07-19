@@ -1005,7 +1005,7 @@ end
 
                             function color.update_color()
                                 local ColorX = (math.clamp(mousePos.X - ColorPicker.AbsolutePosition.X, 0, ColorPicker.AbsoluteSize.X)/ColorPicker.AbsoluteSize.X)
-                                local ColorY = (math.clamp(mousePos.Y - ColorPicker.AbsolutePosition.Y, 0, ColorPicker.AbsoluteSize.Y)/ColorPicker.AbsoluteSize.Y)
+                                local ColorY = (math.clamp(mousePos.Y, 0, ColorPicker.AbsoluteSize.Y)/ColorPicker.AbsoluteSize.Y)
                                 ColorPick.Position = UDim2.new(ColorX, 0, ColorY, 0)
 
                                 color.s = 1 - ColorX
@@ -1031,7 +1031,7 @@ end
                             end)
 
                             function color.update_hue()
-                                local y = math.clamp(mousePos.Y - HuePicker.AbsolutePosition.Y, 0, 148)
+                                local y = math.clamp(mousePos.Y, 0, 148)
                                 HuePick.Position = UDim2.new(0, 0, 0, y)
                                 local hue = y/148
                                 color.h = 1-hue
